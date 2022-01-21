@@ -10,10 +10,26 @@ import { Card } from "react-bootstrap";
 import { Row } from "react-bootstrap";
 import { gameResult } from "./functions";
 
+const wsUrl = "wss://bad-api-assignment.reaktor.com/rps/live";
+
 function App() {
+  const [liveGame, setLiveGame] = useState();
+
+  const ws = new WebSocket(wsUrl);
+  useEffect(() => {
+    ws.onmessage = function (event) {
+      const gameInfo = event.data;
+      setLiveGame(gameInfo);
+
+      console.log(liveGame);
+    };
+  });
+
+  // History Data hooks
   const [loading, setLoading] = useState(true);
   const [games, setGames] = useState([]);
 
+  // History Data
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -43,7 +59,12 @@ function App() {
         </Container>
       </Navbar>
       <Container className="main">
-        <Container className="live games">Live Games will be here</Container>
+        <Container className="live games">
+          <Card bg="dark" text="light">
+            <Card.Header></Card.Header>
+            <Card.Body>{liveGame}</Card.Body>
+          </Card>
+        </Container>
         <Container className="history">
           <Row
             xs={1}
