@@ -1,6 +1,6 @@
 # Rock Paper Scissors App
 
-Project designed in mind for a request from a company Reaktor.
+Project designed in mind for a request from a company Reaktor. Utilising axios for ease of access to API.
 
 Key Minimum Viable Product Points:
 
@@ -16,6 +16,7 @@ Built with:
 - JS
 - CSS
 - Reactjs
+- Axios
 - Bootstrap
 - Netlify
 
