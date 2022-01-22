@@ -14,14 +14,30 @@ const wsUrl = "wss://bad-api-assignment.reaktor.com/rps/live";
 
 function App() {
   const [liveGame, setLiveGame] = useState();
+  const [liveGameId, setLiveGameId] = useState();
+  // const [livePlayerA, setLivePlayerA] = useState();
+  // const [livePlayerB, setLivePlayerB] = useState();
+  // const [livePlayerAPlayed, setLivePlayerAPlayed] = useState();
+  // const [livePlayerBPlayed, setLivePlayerBPlayed] = useState();
 
   const ws = new WebSocket(wsUrl);
+
   useEffect(() => {
     ws.onmessage = function (event) {
       const gameInfo = event.data;
       setLiveGame(gameInfo);
 
       console.log(liveGame);
+      const info = JSON.parse(liveGame);
+      const infoParsed = JSON.parse(info);
+      console.log(infoParsed);
+      console.log(`Game ID: ${infoParsed.gameId}`);
+      console.log(`Game ID: ${infoParsed.playerA.played}`);
+      setLiveGameId(infoParsed.gameId);
+      // setLivePlayerA(infoParsed.playerA.name);
+      // setLivePlayerB(infoParsed.playerB.name);
+      // setLivePlayerAPlayed(infoParsed.playerA.played);
+      // setLivePlayerBPlayed(infoParsed.playerA.played);
     };
   });
 
@@ -47,8 +63,6 @@ function App() {
     fetchData();
   }, []);
 
-  console.log(games.data);
-
   return (
     <div className="App">
       <Navbar bg="dark" variant="dark">
@@ -61,8 +75,10 @@ function App() {
       <Container className="main">
         <Container className="live games">
           <Card bg="dark" text="light">
-            <Card.Header></Card.Header>
-            <Card.Body>{liveGame}</Card.Body>
+            <Card.Header>{/* {livePlayerA} vs.{livePlayerB} */}</Card.Header>
+            <Card.Body>
+              <h2>Game Id: {liveGameId}</h2>
+            </Card.Body>
           </Card>
         </Container>
         <Container className="history">

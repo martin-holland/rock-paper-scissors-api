@@ -21,8 +21,11 @@ function gameResult(playerA, playerB) {
       result = "Player A Won";
     }
   }
-  console.log(result);
   return result;
 }
+
+// function splitter(liveGame) {
+//     const infoArray = liveGame.split('\')
+// }
 
 module.exports = { gameResult };
