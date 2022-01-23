@@ -10,9 +10,7 @@ import { Card } from "react-bootstrap";
 import { Row } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
 import { gameResult } from "./functions";
-import _ from "lodash";
 
-const wsUrl = "wss://bad-api-assignment.reaktor.com/rps/live";
 const webSocketUrl = "wss://bad-api-assignment.reaktor.com/rps/live";
 
 function App() {
