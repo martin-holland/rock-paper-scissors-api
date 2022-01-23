@@ -24,3 +24,17 @@ useEffect(() => {
 
   return () => clearInterval(intervalID);
 }, []);
+
+setLiveInfo({
+  type: "GAME_RESULT",
+  gameId: "5fc837b57c7cfb3abaa9d1d",
+  t: 1642934011193,
+  playerA: {
+    name: "Kokko Järvinen",
+    played: "SCISSORS",
+  },
+  playerB: {
+    name: "Aino Virtanen",
+    played: "ROCK",
+  },
+});

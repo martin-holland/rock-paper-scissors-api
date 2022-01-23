@@ -26,10 +26,10 @@ function gameResult(playerA, playerB) {
 
 function checkValid(object) {
   const loading = "loading";
-  if (object === undefined) {
-    return loading;
+  if (object) {
+    return object;
   }
-  return object;
+  return loading;
 }
 
 module.exports = { gameResult, checkValid };

@@ -8,14 +8,18 @@
 
 .playedA {
   text-transform: capitalize;
-  color: blue;
+  color: skyblue;
 }
 
 .playedB {
   text-transform: capitalize;
-  color: purple;
+  color: coral;
 }
 
 .td-smaller {
   font-size: 0.5rem;
+}
+
+.live-games {
+  margin: 1rem;
 }

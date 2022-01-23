@@ -10,6 +10,7 @@ import { Card } from "react-bootstrap";
 import { Row } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
 import { gameResult } from "./functions";
+import _ from "lodash";
 
 const wsUrl = "wss://bad-api-assignment.reaktor.com/rps/live";
 
@@ -31,7 +32,7 @@ function App() {
       try {
         const info = JSON.parse(liveGame);
         const infoParsed = JSON.parse(info);
-        if (infoParsed !== undefined) {
+        if (_.isEmpty(infoParsed)) {
         }
         setLiveInfo(infoParsed);
         console.log(liveInfo);
@@ -74,14 +75,14 @@ function App() {
         </Container>
       </Navbar>
       <Container className="main">
-        <Container className="live games">
+        <Container className="live-games">
           <Card bg="dark" text="light">
             <Card.Header>Game in Progress</Card.Header>
             <Card.Body>
-              <h2>{liveInfo.gameId}</h2>
+              {/* <h2>{liveInfo.gameId}</h2>
               <h3>
                 {liveInfo.playerA.name} vs. {liveInfo.playerB.name}
-              </h3>
+              </h3> */}
               {/* <p>
                 {liveInfo.playedA.name} played {liveInfo.playerA.played}
               </p>
@@ -95,22 +96,22 @@ function App() {
           <Container></Container>
           <Container>
             <Table className="striped bordered hover">
-              <thead>
+              <thead className="">
                 <tr>
-                  <th>#</th>
-                  <th>Player A</th>
-                  <th>Player B</th>
-                  <th>Winning Player</th>
+                  <th className="table-info">#</th>
+                  <th className="table-warning">Player A</th>
+                  <th className="table-danger">Player B</th>
+                  <th className="table-success">Winning Player</th>
                 </tr>
               </thead>
               {!loading &&
                 games.data.map((id) => (
                   <tbody key={id.gameId}>
                     <tr>
-                      <td className="td-smaller">{id.gameId}</td>
-                      <td>{id.playerA.name}</td>
-                      <td>{id.playerB.name}</td>
-                      <td>
+                      <td className="td-smaller table-info">{id.gameId}</td>
+                      <td className="table-warning">{id.playerA.name}</td>
+                      <td className="table-danger">{id.playerB.name}</td>
+                      <td className="table-success">
                         {gameResult(id.playerA.played, id.playerB.played)}
                       </td>
                     </tr>
