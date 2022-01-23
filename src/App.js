@@ -66,17 +66,13 @@ function App() {
           <Card bg="dark" text="light">
             <Card.Header>Game in Progress</Card.Header>
             <Card.Body>
-              {/* {/* <h2>{liveInfo.gameId}</h2> */}
+              <h2 className="smaller">
+                {liveInfo ? liveInfo.gameId : "Loading..."}
+              </h2>
               <h3>
                 {liveInfo ? liveInfo.playerA.name : "Loading"} vs.{" "}
                 {liveInfo ? liveInfo.playerB.name : "Loading"}
               </h3>
-              {/* <p>
-                {liveInfo.playedA.name} played {liveInfo.playerA.played}
-              </p>
-              <p>
-                {liveInfo.playedB.name} played {liveInfo.playerB.played}
-              </p> */}
             </Card.Body>
           </Card>
         </Container>
