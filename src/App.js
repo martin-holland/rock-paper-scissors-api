@@ -8,38 +8,40 @@ import { Container } from "react-bootstrap";
 import Spinner from "react-bootstrap/Spinner";
 import { Card } from "react-bootstrap";
 import { Row } from "react-bootstrap";
+import Table from "react-bootstrap/Table";
 import { gameResult } from "./functions";
 
 const wsUrl = "wss://bad-api-assignment.reaktor.com/rps/live";
 
 function App() {
   const [liveGame, setLiveGame] = useState();
-  const [liveGameId, setLiveGameId] = useState();
-  // const [livePlayerA, setLivePlayerA] = useState();
-  // const [livePlayerB, setLivePlayerB] = useState();
-  // const [livePlayerAPlayed, setLivePlayerAPlayed] = useState();
-  // const [livePlayerBPlayed, setLivePlayerBPlayed] = useState();
-
-  const ws = new WebSocket(wsUrl);
+  const [liveInfo, setLiveInfo] = useState();
+  const [toggle, setToggle] = useState(false);
 
   useEffect(() => {
+    const intervalID = setTimeout(() => {
+      setToggle((toggle) => !toggle);
+    }, 100);
+
+    const ws = new WebSocket(wsUrl);
     ws.onmessage = function (event) {
       const gameInfo = event.data;
       setLiveGame(gameInfo);
-
       console.log(liveGame);
-      const info = JSON.parse(liveGame);
-      const infoParsed = JSON.parse(info);
-      console.log(infoParsed);
-      console.log(`Game ID: ${infoParsed.gameId}`);
-      console.log(`Game ID: ${infoParsed.playerA.played}`);
-      setLiveGameId(infoParsed.gameId);
-      // setLivePlayerA(infoParsed.playerA.name);
-      // setLivePlayerB(infoParsed.playerB.name);
-      // setLivePlayerAPlayed(infoParsed.playerA.played);
-      // setLivePlayerBPlayed(infoParsed.playerA.played);
+      try {
+        const info = JSON.parse(liveGame);
+        const infoParsed = JSON.parse(info);
+        if (infoParsed !== undefined) {
+        }
+        setLiveInfo(infoParsed);
+        console.log(liveInfo);
+      } catch (error) {
+        console.log(error.message);
+      }
     };
-  });
+
+    return () => clearInterval(intervalID);
+  }, []);
 
   // History Data hooks
   const [loading, setLoading] = useState(true);
@@ -59,7 +61,6 @@ function App() {
       }
       setLoading(false);
     };
-
     fetchData();
   }, []);
 
@@ -75,13 +76,48 @@ function App() {
       <Container className="main">
         <Container className="live games">
           <Card bg="dark" text="light">
-            <Card.Header>{/* {livePlayerA} vs.{livePlayerB} */}</Card.Header>
+            <Card.Header>Game in Progress</Card.Header>
             <Card.Body>
-              <h2>Game Id: {liveGameId}</h2>
+              <h2>{liveInfo.gameId}</h2>
+              <h3>
+                {liveInfo.playerA.name} vs. {liveInfo.playerB.name}
+              </h3>
+              {/* <p>
+                {liveInfo.playedA.name} played {liveInfo.playerA.played}
+              </p>
+              <p>
+                {liveInfo.playedB.name} played {liveInfo.playerB.played}
+              </p> */}
             </Card.Body>
           </Card>
         </Container>
         <Container className="history">
+          <Container></Container>
+          <Container>
+            <Table className="striped bordered hover">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Player A</th>
+                  <th>Player B</th>
+                  <th>Winning Player</th>
+                </tr>
+              </thead>
+              {!loading &&
+                games.data.map((id) => (
+                  <tbody key={id.gameId}>
+                    <tr>
+                      <td className="td-smaller">{id.gameId}</td>
+                      <td>{id.playerA.name}</td>
+                      <td>{id.playerB.name}</td>
+                      <td>
+                        {gameResult(id.playerA.played, id.playerB.played)}
+                      </td>
+                    </tr>
+                  </tbody>
+                ))}
+            </Table>
+          </Container>
           <Row
             xs={1}
             md={3}

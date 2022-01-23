@@ -24,8 +24,12 @@ function gameResult(playerA, playerB) {
   return result;
 }
 
-// function splitter(liveGame) {
-//     const infoArray = liveGame.split('\')
-// }
+function checkValid(object) {
+  const loading = "loading";
+  if (object === undefined) {
+    return loading;
+  }
+  return object;
+}
 
-module.exports = { gameResult };
+module.exports = { gameResult, checkValid };
