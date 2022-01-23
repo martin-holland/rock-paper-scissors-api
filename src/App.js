@@ -13,36 +13,23 @@ import { gameResult } from "./functions";
 import _ from "lodash";
 
 const wsUrl = "wss://bad-api-assignment.reaktor.com/rps/live";
+const webSocketUrl = "wss://bad-api-assignment.reaktor.com/rps/live";
 
 function App() {
-  const [liveGame, setLiveGame] = useState();
   const [liveInfo, setLiveInfo] = useState();
-  const [toggle, setToggle] = useState(false);
 
   useEffect(() => {
-    const intervalID = setTimeout(() => {
-      setToggle((toggle) => !toggle);
-    }, 200);
+    const socket = new WebSocket(webSocketUrl);
 
-    const ws = new WebSocket(wsUrl);
-    ws.onmessage = function (event) {
-      const gameInfo = event.data;
-      setLiveGame(gameInfo);
-      console.log(liveGame);
-      try {
-        const info = JSON.parse(liveGame);
-        const infoParsed = JSON.parse(info);
-        if (_.isEmpty(infoParsed)) {
-        }
-        setLiveInfo(infoParsed);
-        console.log(liveInfo);
-      } catch (error) {
-        console.log(error.message);
-      }
-    };
+    // Listen for messages
 
-    return () => clearInterval(intervalID);
-  }, []);
+    socket.addEventListener("message", function (event) {
+      console.log("Message from server ", JSON.parse(JSON.parse(event.data)));
+      const infoParsed = JSON.parse(JSON.parse(event.data));
+      setLiveInfo(infoParsed);
+      socket.close();
+    });
+  });
 
   // History Data hooks
   const [loading, setLoading] = useState(true);
