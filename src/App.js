@@ -22,7 +22,7 @@ function App() {
   useEffect(() => {
     const intervalID = setTimeout(() => {
       setToggle((toggle) => !toggle);
-    }, 100);
+    }, 200);
 
     const ws = new WebSocket(wsUrl);
     ws.onmessage = function (event) {
@@ -79,10 +79,11 @@ function App() {
           <Card bg="dark" text="light">
             <Card.Header>Game in Progress</Card.Header>
             <Card.Body>
-              {/* <h2>{liveInfo.gameId}</h2>
+              {/* {/* <h2>{liveInfo.gameId}</h2> */}
               <h3>
-                {liveInfo.playerA.name} vs. {liveInfo.playerB.name}
-              </h3> */}
+                {liveInfo ? liveInfo.playerA.name : "Loading"} vs.{" "}
+                {liveInfo ? liveInfo.playerB.name : "Loading"}
+              </h3>
               {/* <p>
                 {liveInfo.playedA.name} played {liveInfo.playerA.played}
               </p>

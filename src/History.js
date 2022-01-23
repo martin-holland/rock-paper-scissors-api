@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { FetchWrapper } from "./fetch-wrapper";
+import { FetchWrapper } from "./FetchWrapper";
 import Spinner from "react-bootstrap/Spinner";
 import PlayerStatsCard from "./PlayerStatsCard";
-import "../index.css";
 
 const url = "https://bad-api-assignment.reaktor.com";
 const historyEndpoint = "/rps/history";
