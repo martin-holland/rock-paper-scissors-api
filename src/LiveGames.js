@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Table from "react-bootstrap/Table";
 import { Container } from "react-bootstrap";
 import { Card } from "react-bootstrap";
 import { Row } from "react-bootstrap";
@@ -10,7 +9,7 @@ const LiveGames = () => {
   const [liveGames, setLiveGames] = useState([]);
 
   useEffect(() => {
-    if (liveGames.length > 5) {
+    if (liveGames.length >= 5) {
       liveGames.length = 3;
     }
     const socket = new WebSocket(ws);
