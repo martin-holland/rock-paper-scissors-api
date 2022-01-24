@@ -1,8 +1,193 @@
-import React from "react";
-import { Container } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { FetchWrapper } from "./FetchWrapper";
+import Table from "react-bootstrap/Table";
+import paper from "./assets/paper.png";
+import rock from "./assets/rock.png";
+import scissors from "./assets/scissors.png";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { gameResult } from "./functions";
 
-function Statistics(props) {
-  return <Container className="statistics"></Container>;
-}
+const url = "https://bad-api-assignment.reaktor.com";
+const historyEndpoint = "/rps/history";
+const API = new FetchWrapper(url);
+const pagesToFetch = 20;
+
+const Statistics = () => {
+  const [games, setGames] = useState([]);
+  const [players, setPlayers] = useState([]);
+
+  let page = 0;
+  let allTimePlayers = [];
+
+  const getGames = (cursor, historyGames = []) => {
+    if (page < pagesToFetch) {
+      try {
+        return API.get(cursor ? cursor : historyEndpoint)
+          .then((response) => response.json())
+          .then((results) => {
+            if (results.data.length < 1) return historyGames;
+            historyGames.push.apply(historyGames, results.data);
+            setGames((games) => [...games, historyGames].flat());
+            page += 1;
+            for (let game of historyGames) {
+              if (
+                !allTimePlayers.some(
+                  (player) => player.name === game.playerA.name
+                )
+              ) {
+                allTimePlayers.push({
+                  name: game.playerA.name,
+                  totGames: 0,
+                  wins: 0,
+                  winRatio: 0,
+                  hands: {
+                    SCISSORS: 0,
+                    ROCK: 0,
+                    PAPER: 0,
+                    mostPlayed: "rock",
+                  },
+                });
+              }
+              if (
+                !allTimePlayers.some(
+                  (player) => player.name === game.playerB.name
+                )
+              ) {
+                allTimePlayers.push({
+                  name: game.playerB.name,
+                  totGames: 0,
+                  wins: 0,
+                  winRatio: 0,
+                  hands: {
+                    SCISSORS: 0,
+                    ROCK: 0,
+                    PAPER: 0,
+                    mostPlayed: "rock",
+                  },
+                });
+              }
+              allTimePlayers.map((player) =>
+                player.name === game.playerA.name
+                  ? (player.totGames += 1) &&
+                    (player.hands[game.playerA.played] += 1) &&
+                    (gameResult(game.playerA.played, game.playerB.played) ===
+                    "won"
+                      ? (player.wins += 1)
+                      : "unknown") &&
+                    (player.winRatio = player.wins / player.totGames) &&
+                    (player.hands.SCISSORS > player.hands.ROCK &&
+                    player.hands.SCISSORS > player.hands.PAPER
+                      ? (player.hands.mostPlayed = "SCISSORS")
+                      : player.hands.ROCK > player.hands.SCISSORS &&
+                        player.hands.ROCK > player.hands.PAPER
+                      ? (player.hands.mostPlayed = "ROCK")
+                      : player.hands.PAPER > player.hands.SCISSORS &&
+                        player.hands.PAPER > player.hands.ROCK
+                      ? (player.hands.mostPlayed = "PAPER")
+                      : "unknown")
+                  : "unknown"
+              );
+
+              // possibly add 1 to total game count, played hand, won/lost/draw FOR PLAYER B
+              allTimePlayers.map((player) =>
+                player.name === game.playerB.name
+                  ? (player.totGames += 1) &&
+                    (player.hands[game.playerB.played] += 1) &&
+                    (gameResult(game.playerB.played, game.playerA.played) ===
+                    "won"
+                      ? (player.wins += 1)
+                      : "unknown") &&
+                    // updating wins ratio
+                    (player.winRatio = player.wins / player.totGames) &&
+                    // updating most played hand
+                    (player.hands.SCISSORS > player.hands.ROCK &&
+                    player.hands.SCISSORS > player.hands.PAPER
+                      ? (player.hands.mostPlayed = "SCISSORS")
+                      : player.hands.ROCK > player.hands.SCISSORS &&
+                        player.hands.ROCK > player.hands.PAPER
+                      ? (player.hands.mostPlayed = "ROCK")
+                      : player.hands.PAPER > player.hands.SCISSORS &&
+                        player.hands.PAPER > player.hands.ROCK
+                      ? (player.hands.mostPlayed = "PAPER")
+                      : "unknown")
+                  : "unknown"
+              );
+            }
+            return getGames(results.cursor, historyGames);
+          });
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    setPlayers((players) =>
+      allTimePlayers.filter((player) => !players.includes(player))
+    );
+  };
+
+  useEffect(() => {
+    getGames();
+  }, []);
+
+  return (
+    <div className="main">
+      <div className="history">
+        <h2>Games played: {games.length}</h2>
+        <h2>Players in total: {players.length}</h2>
+        <h3>[Fetched pages:{pagesToFetch}]</h3>
+        <Table striped bordered hover size="sm">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Player</th>
+              <th>Total games</th>
+              <th>Wins</th>
+              <th>Win ratio</th>
+              <th>{<img src={rock} alt="rock" />}</th>
+              <th>{<img src={paper} alt="paper" />}</th>
+              <th>{<img src={scissors} alt="scissor" />}</th>
+              <th>Most played</th>
+            </tr>
+          </thead>
+          <tbody>
+            {players
+              ? players.map((player, i) => {
+                  return (
+                    <tr key={i}>
+                      <td>{i + 1}</td>
+                      <td>{player ? player.name : "---"}</td>
+                      <td>{player ? player.totGames : "---"}</td>
+                      <td>{player ? player.wins : "---"}</td>
+                      <td>
+                        {player
+                          ? (Math.round(player.winRatio * 100) / 100).toFixed(2)
+                          : "---"}
+                      </td>
+                      <td>{player.hands.ROCK}</td>
+                      <td>{player.hands.PAPER}</td>
+                      <td>{player.hands.SCISSORS}</td>
+                      <td>
+                        <img
+                          src={
+                            player.hands.mostPlayed === "ROCK"
+                              ? rock
+                              : player.hands.mostPlayed === "SCISSORS"
+                              ? scissors
+                              : player.hands.mostPlayed === "PAPER"
+                              ? paper
+                              : "unknown"
+                          }
+                          alt={player.hands.mostPlayed}
+                        />
+                      </td>
+                    </tr>
+                  );
+                })
+              : "unknown"}
+          </tbody>
+        </Table>
+      </div>
+    </div>
+  );
+};
 
 export default Statistics;

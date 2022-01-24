@@ -75,6 +75,10 @@ A not finished link, but I wanted to demonstrate a CI/CD opportunity.
 
 ## Sources
 
+<a href="https://www.flaticon.com/free-icons/rock" title="rock icons">Rock icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/cut" title="cut icons">Cut icons created by Tomas Knop - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/paper" title="paper icons">Paper icons created by torskaya - Flaticon</a>
+
 ## Authors and acknowledgment
 
 - Martin Holland: https://github.com/martin-holland/
@@ -82,4 +86,7 @@ A not finished link, but I wanted to demonstrate a CI/CD opportunity.
 ### Acknowledgements
 
 - http://github.com/ElaFinIta/ - for being a ever vigilant listener and person to bounce ideas off to make a working project
+
+-http://github.com/ElaFinIta/ - for the Statistics Component
+
 - http://github.com/KatiRemo - for inspiring me to attempt to make this project work

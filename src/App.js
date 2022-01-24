@@ -1,11 +1,12 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Navbar from "react-bootstrap/Navbar";
 import { Nav } from "react-bootstrap";
 import { Container } from "react-bootstrap";
 import LiveGames from "./LiveGames";
 import HistoryComp from "./HistoryComp";
+import Statistics from "./Statistics";
 
 function App() {
   return (
@@ -19,8 +20,9 @@ function App() {
       </Navbar>
       <Container className="main">
         <LiveGames />
-        <HistoryComp />
+        <Statistics />
       </Container>
+      <HistoryComp />
     </div>
   );
 }
