@@ -123,9 +123,9 @@ const Statistics = () => {
       allTimePlayers.filter((player) => !players.includes(player))
     );
   };
-
   useEffect(() => {
     getGames();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

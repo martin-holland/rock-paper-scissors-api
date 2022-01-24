@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import { Container } from "react-bootstrap";
 
-const ws = "ws://bad-api-assignment.reaktor.com/rps/live";
+const ws = "wss://bad-api-assignment.reaktor.com/rps/live";
 
 const LiveGames = () => {
   const [liveGames, setLiveGames] = useState([]);
