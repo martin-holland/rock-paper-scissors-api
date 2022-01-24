@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import { Container } from "react-bootstrap";
+import { Card } from "react-bootstrap";
+import { Row } from "react-bootstrap";
 
 const ws = "wss://bad-api-assignment.reaktor.com/rps/live";
 
@@ -34,39 +36,29 @@ const LiveGames = () => {
   return (
     <Container className="live-games">
       <h2>Live games:</h2>
-      <Table
-        striped
-        bordered
-        hover
-        size="sm"
-        variant="dark"
-        className="live_table"
+      <Row
+        xs={2}
+        md={5}
+        lg={5}
+        className="justify-content-between my-2 d-flex gap-1"
       >
-        <thead>
-          <tr>
-            <th>Player A</th>
-            <th></th>
-            <th>VS.</th>
-            <th></th>
-            <th>Player B</th>
-          </tr>
-        </thead>
-        <tbody>
-          {liveGames
-            ? liveGames.map((game) => {
-                return (
-                  <tr key={`${game.gameId}${game.type}`}>
-                    <td>{game.playerA.name}</td>
-                    <td></td>
-                    <td>VS</td>
-                    <td></td>
-                    <td>{game.playerB.name}</td>
-                  </tr>
-                );
-              })
-            : "unknown"}
-        </tbody>
-      </Table>
+        {liveGames.map((game) => (
+          <Card
+            bg="success"
+            text="light"
+            style={{ width: "15rem" }}
+            className="mb-2 livegame"
+            key={game.gameId}
+          >
+            <Card.Header>{game.gameId}</Card.Header>
+            <Card.Body>
+              <h2 className="players">{game.playerA.name}</h2>
+              <p>VS.</p>
+              <h2 className="players">{game.playerB.name}</h2>
+            </Card.Body>
+          </Card>
+        ))}
+      </Row>
     </Container>
   );
 };

@@ -31,6 +31,7 @@ function HistoryComp(props) {
 
   return (
     <Container className="history">
+      <h2>All History</h2>
       <Container>
         <Table className="striped bordered hover">
           <thead className="">
