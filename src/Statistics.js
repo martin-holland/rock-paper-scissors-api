@@ -131,9 +131,9 @@ const Statistics = () => {
   return (
     <div className="main">
       <div className="history">
-        <h2>Games played: {games.length}</h2>
-        <h2>Players in total: {players.length}</h2>
-        <h3>[Fetched pages:{pagesToFetch}]</h3>
+        <h4 className="alldata">Games played: {games.length}</h4>
+        <h4 className="alldata">Players in total: {players.length}</h4>
+        <h4 className="alldata">Fetched pages:{pagesToFetch}</h4>
         <Table striped bordered hover size="sm">
           <thead>
             <tr>
