@@ -36,7 +36,7 @@ Built with:
 
 Currently attaining data but not all of it through the cursor function. Page would take some time to load through all options. Keeping it to just the first set of data at the moment until I find a workable solution. Realise there is some 1400+ pages of data to sift through. I wonder if some sort of data sort algorithm could be beneficial here.
 
-2. [ ] Generate Statistics from Data for individual players
+2. [x] Generate Statistics from Data for individual players
 
 Goal here is to process the data and manipulate it into a more useful visual representation as per user request.
 
@@ -52,7 +52,7 @@ Really learnt and understood the importance of conditional rendering here to pre
 
 4. [x] Generate statistics for Individual players
 
-5. [ ] Beautify and add some icons for visual impact
+5. [x] Beautify and add some icons for visual impact
 
 6. [ ] Allow data to be sorted / searched
 

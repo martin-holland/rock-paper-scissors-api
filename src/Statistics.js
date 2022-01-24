@@ -183,6 +183,28 @@ const Statistics = () => {
                   );
                 })
               : "unknown"}
+            <tr>
+              <th>#</th>
+              <th></th>
+              <th>Grand Total games</th>
+              <th>Total Wins</th>
+              <th>Win ratio</th>
+              <th>{<img src={rock} alt="rock" />}</th>
+              <th>{<img src={paper} alt="paper" />}</th>
+              <th>{<img src={scissors} alt="scissor" />}</th>
+              <th></th>
+            </tr>
+            <tr>
+              <th>#</th>
+              <th></th>
+              <th>{}</th>
+              <th>Total Wins</th>
+              <th>Win ratio</th>
+              <th>{<img src={rock} alt="rock" />}</th>
+              <th>{<img src={paper} alt="paper" />}</th>
+              <th>{<img src={scissors} alt="scissor" />}</th>
+              <th></th>
+            </tr>
           </tbody>
         </Table>
       </div>

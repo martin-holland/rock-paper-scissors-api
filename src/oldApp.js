@@ -63,7 +63,6 @@ function App() {
       <Container className="main">
         <LiveGames />
         <Container className="history">
-          <Container></Container>
           <Container>
             <Table className="striped bordered hover">
               <thead className="">
