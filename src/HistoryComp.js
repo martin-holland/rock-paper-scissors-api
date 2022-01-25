@@ -18,7 +18,7 @@ function HistoryComp(props) {
       setLoading(true);
       try {
         const { data: response } = await axios.get(
-          "https://cors-anywhere.herokuapp.com/https://bad-api-assignment.reaktor.com/rps/history"
+          "https://bad-api-assignment.reaktor.com/rps/history"
         );
         setGames(response);
       } catch (error) {

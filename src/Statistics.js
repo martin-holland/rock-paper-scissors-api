@@ -7,8 +7,7 @@ import scissors from "./assets/scissors.png";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { gameResult } from "./functions";
 
-const url =
-  "https://cors-anywhere.herokuapp.com/https://bad-api-assignment.reaktor.com";
+const url = "https://bad-api-assignment.reaktor.com";
 const historyEndpoint = "/rps/history";
 const API = new FetchWrapper(url);
 const pagesToFetch = 20;
